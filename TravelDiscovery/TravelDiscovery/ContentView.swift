@@ -83,10 +83,10 @@ struct TrendingCreatorsView: View {
                     .font(Font.system(size: 14, weight: .semibold))
             }.padding(.horizontal)
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
+                HStack(spacing: 12) {
                     ForEach(0..<10, id: \.self) { num in
                         Spacer()
-                            .frame(width: 50, height: 50)
+                            .frame(width: 60, height: 60)
                             .background(Color.gray)
                             .cornerRadius(.infinity)
                             .shadow(color: .gray, radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2)
@@ -98,20 +98,36 @@ struct TrendingCreatorsView: View {
     }
 }
 
+struct Category: Hashable {
+    let name, imageName: String
+}
+
 struct DiscoverCategoriesView: View {
+    let categories: [Category] = [
+        .init(name: "Art", imageName: "paintpalette.fill"),
+        .init(name: "Sport", imageName: "sportscourt.fill"),
+        .init(name: "Live Events", imageName: "music.mic"),
+        .init(name: "Food", imageName: "paintpalette.fill"),
+    ]
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false, content: {
-            HStack(spacing: 8) {
-                ForEach(0..<5, id: \.self) { num in
+            HStack(alignment: .top, spacing: 16) {
+                ForEach(categories, id: \.self) { category in
                     VStack(spacing: 5) {
-                        Spacer()
-                            .frame(width: 50, height: 50)
+                        Image(systemName: category.imageName)
+                            .font(.system(size: 20))
+                            .foregroundColor(.white)
+                            //.imageScale(.large)
+                            .frame(width: 66, height: 66)
                             .background(Color.gray)
-                            .cornerRadius(.infinity)
+                            .cornerRadius(33)
                             .shadow(color: .gray, radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2)
-                        Text("Art")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
+                        Text(category.name)
+                            .font(.system(size: 11.5, weight: .semibold))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(1)
+                    }.frame(width: 66)
                 }
             }.padding(.horizontal, 16)
         })
